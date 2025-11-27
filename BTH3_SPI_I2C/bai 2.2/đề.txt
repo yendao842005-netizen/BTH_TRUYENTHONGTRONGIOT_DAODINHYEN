@@ -1,0 +1,45 @@
+Bài 3.2. Xây dựng chương trình đồng hồ báo thức thông minh
+Thiết kế hệ thống đồng hồ báo thức thông minh sử dụng Arduino/ESP32, module
+thời gian thực DS1307, LCD 16x2 I2C, buzzer, và 4 nút nhấn điều khiển. Hệ thống hiển
+thị thời gian thực, cho phép người dùng thiết lập – bật/tắt – điều chỉnh báo thức trực tiếp
+bằng nút nhấn và phát tín hiệu báo thức khi đến giờ cài đặt. Mô tả hệ thống
+1. Khởi động hệ thống
+- Arduino/ESP32 khởi tạo giao tiếp I2C với:
+o DS1307 RTC: duy trì và cập nhật thời gian thực. o LCD I2C: hiển thị thời gian, trạng thái báo thức. - Kiểm tra trạng thái của DS1307:
+o Nếu chưa được cài thời gian, hệ thống tự động thiết lập theo thời gian
+
+Bài tập thực hành – Truyền thông trong IoT
+
+6
+mặc định hoặc thời gian từ máy tính. o Nếu đã có thời gian, giữ nguyên giá trị đang lưu. 2. Giao tiếp và đọc thời gian từ DS1307
+- Hệ thống đọc thời gian từ DS1307 mỗi giây (hoặc mỗi 500 ms). - Thông tin bao gồm:
+o Giờ:Phút:Giây
+o Ngày/Tháng/Năm
+3. Thiết lập báo thức bằng nút nhấn
+Nút Ký hiệu Chức năng
+
+BTN1 MODE
+
+Chuyển chế độ (Xem giờ - Cài báo thức – Cài thời
+gian)
+
+BTN2 UP Tăng giá trị (giờ, phút, v.v)
+BTN3 DOWN Giảm giá trị
+BTN4 SET Xác nhận hoặc chuyển sang phần tiếp theo
+
+- Quy trình thiết lập báo thức:
+o Ở chế độ bình thường → LCD hiển thị thời gian thực. o Nhấn MODE → chuyển sang chế độ “Cài báo thức”. o Dùng UP và DOWN để chỉnh giờ báo thức. o Nhấn SET → chuyển sang chỉnh phút báo thức. o Nhấn SET lần nữa → lưu báo thức và thoát. o Giữ MODE 2 giây → bật/tắt báo thức (AL ON / AL OFF). 4. Chức năng báo thức
+- Khi thời gian hiện tại trùng với giờ báo thức, Arduino kích hoạt:
+
+Bài tập thực hành – Truyền thông trong IoT
+
+7
+
+o Buzzer kêu liên tục hoặc theo nhịp. o LED (nếu có) nhấp nháy. - Báo thức tắt khi:
+o Người dùng nhấn nút bất kỳ (thường là SET hoặc MODE). o Hoặc hết thời gian báo (ví dụ sau 30 giây)
+
+5. Cập nhật và lưu trữ thời gian báo thức
+- Thời gian báo thức và trạng thái (ON/OFF) được lưu trong EEPROM, đảm bảo không mất sau khi reset. - Hệ thống liên tục đọc và hiển thị thời gian DS1307, đảm bảo độ chính xác
+cao. - Việc cập nhật có thể thực hiện bằng millis() để tránh treo chương trình
+
+(thay vì delay()).

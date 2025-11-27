@@ -1,0 +1,21 @@
+Bài 1.2. Cấu hình UART Baud Rate Động qua Nút Nhấn
+
+	Thiết kế hệ thống sử dụng 1 nút nhấn và UART để:
+
+	1. Chuyển giữa chế độ vận hành và cấu hình bằng cách nhấn giữ nút >3s
+
+		Trong chế độ cấu hình:
+
+			1 lần nhấn - chọn 9600 bps
+
+			2 lần nhấn - chọn 115200 bps
+
+			Có phản hồi bằng LED:
+
+			Nháy nhanh khi vào cấu hình
+
+			Nháy 1/2 lần để báo lựa chọn
+
+		Gửi thông báo xác nhận cấu hình UART qua cổng Serial
+
+	2. Sau khi cấu hình, nhấn giữ nút >3s để hệ thống trở về vận hành bình thường
